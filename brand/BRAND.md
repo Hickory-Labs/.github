@@ -38,13 +38,16 @@ chosen face's outlines and shipped as an SVG; it is never set as live text.
 
 ## Mark
 
-The leaflet alone, same lean, with a midrib cut in the ground color. On a circle for avatars.
+Two marks, by size.
 
-| Use | Size | Midrib |
+| Use | Mark | File |
 | --- | --- | --- |
-| GitHub org avatar | 512 px source, shown at 48 and 24 | yes at 48, no at 24 |
-| Favicon | 32, 16 | no |
-| README stamp, social cards | 64 and up | yes |
+| GitHub org avatar (rounded square, shown at 48 and 24) | `hickory` wordmark on a Lake tile, no LABS | `avatar-tile.svg`, `avatar-512.png`, `avatar-1024.png` |
+| Favicon 32, 16, apple touch 180 | the leaflet alone on Lake, no midrib below 32 | `favicon-*.png`, `apple-touch-icon.png` |
+| README stamp, social cards | the leaflet with midrib, or the full lockup | `mark-plain-*.svg`, lockups |
+
+The leaflet alone is kept for favicons and stamps, where a word would not be legible. It is
+centered on its bounding box (`tools/leafmark.py`), not by eye.
 
 Products keep their own marks under the studio mark. V Formation's bird icon
 (`M3 13c3-3 6-3 9 1 3-4 6-4 9-1` on a 24 grid) is the product's, not the studio's.
