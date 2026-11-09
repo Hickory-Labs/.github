@@ -17,7 +17,9 @@ rsvg-convert -w 512 -h 512 mark-on-lake.svg -o avatar-512.png
 
 `tree.lockup(font, "leaf", ink, accent=None, labs=True)` returns the SVG; `labs=False` drops the
 LABS line. `tree.mark(font, "leaf", fg, bg=None, rib_ok=True)` returns the leaflet, on a circle
-when `bg` is given, with the midrib cut in `bg`; pass `rib_ok=False` below 32 px.
+when `bg` is given, with its detail cut out: `detail="veins"` (the default, 48 px and up) or `"line"`
+(the midrib alone, below 48); `rib_ok=False` leaves it plain. The lockup's leaflet always takes the line.
+`leafdetail.recut(svg, level)` applies the same detail to a finished SVG, and is safe to run again.
 
 Outfit is licensed under the SIL Open Font License. The outlines here are rendered artwork, which
 the OFL permits; the font itself is not redistributed.

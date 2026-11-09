@@ -43,8 +43,12 @@ Two marks, by size.
 | Use | Mark | File |
 | --- | --- | --- |
 | GitHub org avatar (rounded square, shown at 48 and 24) | `hickory` wordmark on a Lake tile, no LABS | `avatar-tile.svg`, `avatar-512.png`, `avatar-1024.png` |
-| Favicon 32, 16, apple touch 180 | the leaflet alone on Lake, no midrib below 32 | `favicon-*.png`, `apple-touch-icon.png` |
-| README stamp, social cards | the leaflet with midrib, or the full lockup | `mark-plain-*.svg`, lockups |
+| Favicon 32, 16 | the leaflet alone on Lake, with its midrib | `favicon-*.png`, `mark-small-on-lake.svg` |
+| Apple touch 180, README stamp, social cards | the leaflet alone with midrib and veins, or the full lockup | `apple-touch-icon.png`, `mark-*.svg`, lockups |
+
+The leaflet's detail goes by the size it renders at. Under 48 px, the midrib alone: favicons, and the dot of the i
+in every lockup. From 48 px up, the midrib and three pairs of side veins curving to the tip, as a real hickory
+leaflet has them. Both are cut out of the leaf (`tools/leafdetail.py`), so the ground shows through on any surface.
 
 The leaflet alone is kept for favicons and stamps, where a word would not be legible. It is
 centered on its bounding box (`tools/leafmark.py`), not by eye.
