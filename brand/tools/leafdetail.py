@@ -1,8 +1,7 @@
 """The leaflet's detail, cut out of the leaf with a mask so the ground shows through on any surface.
 
-Two levels, by the size the leaf renders at (BRAND.md, Mark):
-- "line": the midrib alone. The leaf as the dot of the i, favicons, anything under 48 px.
-- "veins": the midrib and three pairs of side veins curving to the tip. Stamps, avatars, anything 48 px and up.
+By the size the leaf renders at (BRAND.md, Mark): "veins", the midrib and three pairs of side veins curving to the
+tip, from 48 px up; under 48 px, None, a plain leaf (the dot of the i, favicons).
 
 Coordinates are the leaflet's own (tree.leaflet_path: base at the origin, tip at (w, -h)), drawn for w=42.6,
 h=52 and scaled to the leaf, so the detail fits any leaflet the tools cut.
@@ -10,7 +9,6 @@ h=52 and scaled to the leaf, so the detail fits any leaflet the tools cut.
 import re
 
 W0, H0 = 42.6, 52.0
-LINE = ((6.8, -7.3), (35.0, -41.6))
 MIDRIB = ((4.2, -4.5), (37.5, -44.6))
 # Fitted inside the outline (64% of the way to the edge), each bowing toward the tip.
 VEINS = [
@@ -27,10 +25,6 @@ def _pt(p, w, h):
 def cuts(w, h, level):
     """The detail as black strokes, for the inside of a mask."""
     k = h / H0
-    if level == "line":
-        a, b = LINE
-        return (f'<path d="M{_pt(a, w, h)} L{_pt(b, w, h)}" fill="none" stroke="black" '
-                f'stroke-width="{2.6 * k:.2f}" stroke-linecap="round"/>')
     a, b = MIDRIB
     veins = " ".join(f"M{_pt(s, w, h)} Q{_pt(c, w, h)} {_pt(e, w, h)}" for s, c, e in VEINS)
     return (f'<g fill="none" stroke="black" stroke-linecap="round">'

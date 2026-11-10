@@ -26,8 +26,8 @@ def leaf_dot(font,size,x,base,scale=1.0,rot=-22):
     cx=x+(min(xs)+max(xs))/2*s; cy=base-(ymin+ymax)/2*s     # dot center in svg coords
     L=stem_w*2.5*scale; Wl=L*0.82
     p=leaflet_path(L, L*0.0+L)  # square-ish box, rotate to lean
-    # The dot of the i is small wherever the lockup goes, so the midrib alone (leafdetail.py).
-    return leaf(f"translate({cx-stem_w*0.15:.2f} {cy+L*0.42:.2f}) rotate({rot})", leaflet_path(Wl, L), "line", "hl-leaf-1")
+    # The dot of the i is small wherever the lockup goes, so the leaf stays plain (leafdetail.py).
+    return leaf(f"translate({cx-stem_w*0.15:.2f} {cy+L*0.42:.2f}) rotate({rot})", leaflet_path(Wl, L), None, "hl-leaf-1")
 
 def h_fork(font,size,x,base,angle=28,length=0.42):
     d=G[font]; s=size/d["upm"]; stem_w=STEM[font]*size; asc={"outfit":0.70,"jost":0.72}[font]*size
@@ -64,7 +64,7 @@ def mark(font, variant, fg, bg=None, size=100, rib_ok=True, detail="veins"):
     if variant=="leaf":
         L=size*0.52; Wl=L*0.82; rot=-22
         ox=size*0.40; oy=size*0.74
-        # detail: "veins" from 48 px up, "line" below, None for a plain leaf (leafdetail.py).
+        # detail: "veins" from 48 px up, None (a plain leaf) below (leafdetail.py).
         p=leaf(f"translate({ox:.1f} {oy:.1f}) rotate({rot})", leaflet_path(Wl, L), detail if rib_ok else None, "hl-leaf-1", fg)
         return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">{circ}{p}</svg>'
     else:
