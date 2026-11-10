@@ -1,5 +1,6 @@
 import json, re
 from render import word, G
+from leafdetail import leaf
 from final import caps, STEM, LSB
 DARK="#0F1419"; CREAM="#E8EAE3"; AMBER="#F2A541"
 
@@ -25,7 +26,8 @@ def leaf_dot(font,size,x,base,scale=1.0,rot=-22):
     cx=x+(min(xs)+max(xs))/2*s; cy=base-(ymin+ymax)/2*s     # dot center in svg coords
     L=stem_w*2.5*scale; Wl=L*0.82
     p=leaflet_path(L, L*0.0+L)  # square-ish box, rotate to lean
-    return f'<path transform="translate({cx-stem_w*0.15:.2f} {cy+L*0.42:.2f}) rotate({rot})" d="{leaflet_path(Wl, L)}"/>'
+    # The dot of the i is small wherever the lockup goes, so the leaf stays plain (leafdetail.py).
+    return leaf(f"translate({cx-stem_w*0.15:.2f} {cy+L*0.42:.2f}) rotate({rot})", leaflet_path(Wl, L), None, "hl-leaf-1")
 
 def h_fork(font,size,x,base,angle=28,length=0.42):
     d=G[font]; s=size/d["upm"]; stem_w=STEM[font]*size; asc={"outfit":0.70,"jost":0.72}[font]*size
@@ -57,15 +59,14 @@ def lockup(font, variant, fg, accent=None, size=100, labs=True):
     vb_x=-size*0.16 if variant=="fork" else -size*0.02
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb_x:.1f} {-size*0.05:.1f} {Wd-vb_x:.1f} {H+size*0.05:.1f}"><g fill="{fg}">{w}</g>{extra}<g fill="{fg}" opacity="0.75">{lb}</g></svg>'
 
-def mark(font, variant, fg, bg=None, size=100, rib_ok=True):
+def mark(font, variant, fg, bg=None, size=100, rib_ok=True, detail="veins"):
     circ=f'<circle cx="{size/2}" cy="{size/2}" r="{size/2}" fill="{bg}"/>' if bg else ""
     if variant=="leaf":
         L=size*0.52; Wl=L*0.82; rot=-22
         ox=size*0.40; oy=size*0.74
-        p=f'<path transform="translate({ox:.1f} {oy:.1f}) rotate({rot})" d="{leaflet_path(Wl, L)}" fill="{fg}"/>'
-        rib=(f'<path transform="translate({ox:.1f} {oy:.1f}) rotate({rot})" d="M{Wl*0.16:.1f} {-L*0.14:.1f} L{Wl*0.82:.1f} {-L*0.80:.1f}" '
-             f'fill="none" stroke="{bg}" stroke-width="{size*0.026:.1f}" stroke-linecap="round"/>') if bg and rib_ok else ""
-        return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">{circ}{p}{rib}</svg>'
+        # detail: "veins" from 48 px up, None (a plain leaf) below (leafdetail.py).
+        p=leaf(f"translate({ox:.1f} {oy:.1f}) rotate({rot})", leaflet_path(Wl, L), detail if rib_ok else None, "hl-leaf-1", fg)
+        return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}">{circ}{p}</svg>'
     else:
         import math; sw=size*0.10; cx=size/2
         y0=size*0.78; ytop=size*0.24; fy=size*0.50; L=size*0.36
